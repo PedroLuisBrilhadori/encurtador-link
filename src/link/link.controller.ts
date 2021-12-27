@@ -8,31 +8,32 @@ let FAKE_DB: LinkCut;
 
 @Controller("link")
 export class LinkController {
-  @Post("create")
-  createLinks(@Req() request: Request) {
-    this._saveLink(request.query.link.toString(), this._createLink());
+   @Post("create")
+   createLinks(@Req() request: Request) {
+      this._saveLink(request.query.link.toString(), this._createLink());
 
-    return FAKE_DB;
-  }
+      return FAKE_DB;
+   }
 
-  private _createLink(): string {
-    let link: string = "";
-    const possibleChars: string =
-      "abcdefghijklmnopqrstuvwxyz+ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789";
+   private _createLink(): string {
+      let link: string = "";
+      const possibleChars: string =
+         "abcdefghijklmnopqrstuvwxyz+ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789";
 
-    for (let i = 0; i < 5; i++)
-      link +=
-        possibleChars[
-          Math.floor(Math.random() * (possibleChars.length - 0) + 0)
-        ];
+      for (let i = 0; i < 5; i++)
+         link +=
+            possibleChars[
+               Math.floor(Math.random() * (possibleChars.length - 0) + 0)
+            ];
 
-    return URL + link;
-  }
+      return link;
+   }
 
-  private _saveLink(bigLink: string, smallLink: string) {
-    FAKE_DB = {
-      bigLink: bigLink,
-      smallLink: smallLink,
-    };
-  }
+   private _saveLink(bigLink: string, id: string) {
+      FAKE_DB = {
+         id: id,
+         bigLink: bigLink,
+         smallLink: URL + id,
+      };
+   }
 }

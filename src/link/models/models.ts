@@ -1,4 +1,5 @@
 export interface LinkCut {
-  bigLink: string;
-  smallLink: string;
+   id: string;
+   bigLink: string;
+   smallLink: string;
 }
