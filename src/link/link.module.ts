@@ -2,6 +2,6 @@ import { Module } from "@nestjs/common";
 import { LinkController } from "./link.controller";
 
 @Module({
-  controllers: [LinkController],
+   controllers: [LinkController],
 })
 export class LinkModule {}
