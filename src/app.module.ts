@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { LinkModule } from "./link/link.module";
+import { LinkModule } from "./link";
 import { RedirectModule } from "./redirect/redirect.module";
 
 @Module({
