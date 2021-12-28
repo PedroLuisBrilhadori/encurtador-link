@@ -40,11 +40,20 @@ export class LinkService {
          .on("value", (snap) => {
             val = snap.val();
          });
+      console.log(val);
       return val;
    }
-
    getLink(id: string) {
-      let links = this.getLinks();
-      if (links) return links[id];
+      let val;
+      admin
+         .database()
+         .ref()
+         .orderByKey()
+         .equalTo(id)
+         .on("value", (snap) => {
+            val = snap.val();
+         });
+      if (val) return val[id];
+      return val;
    }
 }
