@@ -1,11 +1,9 @@
-import { Controller, Post, Req } from "@nestjs/common";
+import { Controller, Get, Post, Req } from "@nestjs/common";
 import { Request } from "express";
 import { LinkService } from "./link.service";
 import { LinkCut } from "./models";
 
 const URL = "https://localhost:3000/";
-
-let FAKE_DB: LinkCut;
 
 @Controller("link")
 export class LinkController {
@@ -13,8 +11,7 @@ export class LinkController {
 
    @Post("create")
    createLinks(@Req() request: Request) {
-      this._saveLink(request.query.link.toString(), this._createLink());
-      return FAKE_DB;
+      return this._saveLink(request.query.link.toString(), this._createLink());
    }
 
    private _createLink(): string {
@@ -22,10 +19,17 @@ export class LinkController {
    }
 
    private _saveLink(bigLink: string, id: string) {
-      FAKE_DB = {
+      const link: LinkCut = {
          id: id,
          bigLink: bigLink,
          smallLink: URL + "redirect/" + id,
       };
+
+      return this.linkService.saveLink(link);
+   }
+
+   @Get("my-links")
+   getLinks() {
+      return this.linkService.getLinks();
    }
 }
