@@ -21,7 +21,7 @@ export class LinkController {
    private _saveLink(bigLink: string, id: string) {
       const link: LinkCut = {
          id: id,
-         bigLink: bigLink,
+         bigLink: bigLink.includes("http") ? bigLink : "https://" + bigLink,
          smallLink: URL + "redirect/" + id,
       };
 

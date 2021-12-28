@@ -18,7 +18,7 @@ export class RedirectController {
 
    @Get("/:id")
    redirect(@Param() params, @Res() res: Response) {
-      res.status(301).redirect("https://" + this._getLink(params.id).bigLink);
+      res.status(301).redirect(this._getLink(params.id).bigLink);
    }
 
    private _getLink(id: string): LinkCut {
