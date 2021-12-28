@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Redirect, Res } from "@nestjs/common";
 import { LinkCut } from "src/link/models";
 import { Response } from "express";
+import { LinkService } from "src/link";
 
 const fake_redirect = {
    id: "lWvlu",
@@ -9,6 +10,7 @@ const fake_redirect = {
 };
 @Controller("redirect")
 export class RedirectController {
+   constructor(private linkService: LinkService) {}
    @Get()
    linkNotFound(): string {
       return "link not found";
@@ -20,7 +22,7 @@ export class RedirectController {
    }
 
    private _getLink(id: string): LinkCut {
-      // isso utilizará um serviço
-      return fake_redirect;
+      const link = this.linkService.getLink(id);
+      if (link) return link;
    }
 }

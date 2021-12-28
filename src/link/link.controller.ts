@@ -3,7 +3,7 @@ import { Request } from "express";
 import { LinkService } from "./link.service";
 import { LinkCut } from "./models";
 
-const URL = "https://localhost:3000/";
+const URL = "http://localhost:3000/";
 
 @Controller("link")
 export class LinkController {
