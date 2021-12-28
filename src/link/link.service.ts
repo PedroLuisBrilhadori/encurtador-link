@@ -1,11 +1,21 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, OnModuleInit } from "@nestjs/common";
 import { LinkCut } from "./models";
+import { Reference } from "@firebase/database-types";
 
 import * as admin from "firebase-admin";
+import { Database } from "firebase-admin/lib/database/database";
 
 @Injectable()
-export class LinkService {
-   constructor() {}
+export class LinkService implements OnModuleInit {
+   ref: Reference;
+
+   constructor() {
+      this.ref = admin.database().ref();
+   }
+
+   onModuleInit() {
+      this.ref.on("value", (snap) => snap.val());
+   }
 
    createLink(): string {
       let link: string = "";
@@ -21,9 +31,7 @@ export class LinkService {
    }
 
    saveLink(link: LinkCut): LinkCut {
-      admin
-         .database()
-         .ref()
+      this.ref
          .child(link.id)
          .set(link)
          .then((error) => {
@@ -34,20 +42,14 @@ export class LinkService {
 
    getLinks() {
       let val;
-      admin
-         .database()
-         .ref()
-         .on("value", (snap) => {
-            val = snap.val();
-         });
-      console.log(val);
+      this.ref.on("value", (snap) => {
+         val = snap.val();
+      });
       return val;
    }
    getLink(id: string) {
       let val;
-      admin
-         .database()
-         .ref()
+      this.ref
          .orderByKey()
          .equalTo(id)
          .on("value", (snap) => {
