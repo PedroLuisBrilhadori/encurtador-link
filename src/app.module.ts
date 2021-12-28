@@ -1,12 +1,11 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { LinkModule } from "./link";
 import { RedirectModule } from "./redirect/redirect.module";
 
 @Module({
-   imports: [LinkModule, RedirectModule, ConfigModule.forRoot()],
+   imports: [LinkModule, RedirectModule],
    controllers: [AppController],
    providers: [AppService],
 })
