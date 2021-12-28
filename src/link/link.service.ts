@@ -31,6 +31,11 @@ export class LinkService implements OnModuleInit {
    }
 
    saveLink(link: LinkCut): LinkCut {
+      let verify = this.verifyLink(link);
+      if (verify) {
+         return this.verifyLink(link)[Object.keys(verify)[0].toString()];
+      }
+
       this.ref
          .child(link.id)
          .set(link)
@@ -38,6 +43,18 @@ export class LinkService implements OnModuleInit {
             if (error) console.log(error);
          });
       return link;
+   }
+
+   verifyLink(link: LinkCut) {
+      let val: LinkCut;
+      this.ref
+         .orderByChild("bigLink")
+         .equalTo(link.bigLink)
+         .on("value", (snap) => {
+            val = snap.val();
+         });
+
+      return val;
    }
 
    getLinks() {
@@ -48,8 +65,8 @@ export class LinkService implements OnModuleInit {
       return val;
    }
 
-   getLink(id: string) {
-      let val;
+   getLink(id: string): LinkCut {
+      let val: LinkCut;
       this.ref
          .orderByKey()
          .equalTo(id)
