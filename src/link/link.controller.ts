@@ -22,7 +22,7 @@ export class LinkController {
       const link: LinkCut = {
          id: id,
          bigLink: bigLink.includes("http") ? bigLink : "https://" + bigLink,
-         smallLink: "www." + URL + "redirect/" + id,
+         smallLink: URL + "redirect/" + id,
       };
 
       return this.linkService.saveLink(link);
